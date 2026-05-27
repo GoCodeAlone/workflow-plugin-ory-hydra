@@ -1,0 +1,36 @@
+version: 2
+project_name: workflow-plugin-ory-hydra
+
+before:
+  hooks:
+    - go mod tidy
+    - "sed -i.bak 's/\"version\": \".*\"/\"version\": \"{{ .Version }}\"/' plugin.json && rm -f plugin.json.bak"
+    - "sed -i.bak 's|releases/download/v[^/]*/|releases/download/v{{ .Version }}/|g' plugin.json && rm -f plugin.json.bak"
+
+builds:
+  - id: plugin
+    main: ./cmd/workflow-plugin-ory-hydra
+    binary: workflow-plugin-ory-hydra
+    env: [CGO_ENABLED=0, GOWORK=off]
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    ldflags: ["-s", "-w", "-X github.com/GoCodeAlone/workflow-plugin-ory-hydra/internal.Version={{.Version}}"]
+
+archives:
+  - id: plugin
+    builds: [plugin]
+    name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+    format: tar.gz
+    files:
+      - plugin.json
+      - plugin.contracts.json
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+
+release:
+  draft: true
+  github:
+    owner: GoCodeAlone
+    name: workflow-plugin-ory-hydra

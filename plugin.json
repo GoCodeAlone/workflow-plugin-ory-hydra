@@ -1,0 +1,61 @@
+{
+  "name": "workflow-plugin-ory-hydra",
+  "version": "0.1.0",
+  "description": "Ory Hydra OAuth2/OIDC provider plugin",
+  "author": "GoCodeAlone",
+  "license": "MIT",
+  "type": "external",
+  "tier": "community",
+  "private": false,
+  "minEngineVersion": "0.64.0",
+  "keywords": ["ory", "hydra", "oauth2", "oidc", "jwk", "authentication"],
+  "homepage": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra",
+  "repository": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra",
+  "capabilities": {
+    "configProvider": false,
+    "moduleTypes": ["ory.hydra"],
+    "stepTypes": [
+      "step.ory_hydra_auth_provider_describe",
+      "step.ory_hydra_oauth2_client_create",
+      "step.ory_hydra_oauth2_client_get",
+      "step.ory_hydra_oauth2_client_list",
+      "step.ory_hydra_oauth2_client_update",
+      "step.ory_hydra_oauth2_client_delete",
+      "step.ory_hydra_json_web_key_set_create",
+      "step.ory_hydra_json_web_key_set_get",
+      "step.ory_hydra_json_web_key_set_update",
+      "step.ory_hydra_json_web_key_set_delete",
+      "step.ory_hydra_json_web_key_get",
+      "step.ory_hydra_json_web_key_update",
+      "step.ory_hydra_json_web_key_delete",
+      "step.ory_hydra_trusted_jwt_issuer_list",
+      "step.ory_hydra_trusted_jwt_issuer_get",
+      "step.ory_hydra_trusted_jwt_issuer_create",
+      "step.ory_hydra_trusted_jwt_issuer_delete",
+      "step.ory_hydra_oauth2_consent_session_list"
+    ],
+    "triggerTypes": []
+  },
+  "downloads": [
+    {
+      "os": "linux",
+      "arch": "amd64",
+      "url": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra/releases/download/v0.1.0/workflow-plugin-ory-hydra-linux-amd64.tar.gz"
+    },
+    {
+      "os": "linux",
+      "arch": "arm64",
+      "url": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra/releases/download/v0.1.0/workflow-plugin-ory-hydra-linux-arm64.tar.gz"
+    },
+    {
+      "os": "darwin",
+      "arch": "amd64",
+      "url": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra/releases/download/v0.1.0/workflow-plugin-ory-hydra-darwin-amd64.tar.gz"
+    },
+    {
+      "os": "darwin",
+      "arch": "arm64",
+      "url": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra/releases/download/v0.1.0/workflow-plugin-ory-hydra-darwin-arm64.tar.gz"
+    }
+  ]
+}

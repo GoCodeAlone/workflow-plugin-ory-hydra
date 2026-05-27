@@ -1,0 +1,155 @@
+{
+  "version": "1",
+  "contracts": [
+    {
+      "kind": "module",
+      "type": "ory.hydra",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.ProviderConfig"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_auth_provider_describe",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.AuthProviderDescribeConfig",
+      "input": "workflow.plugins.ory_hydra.v1.AuthProviderDescribeInput",
+      "output": "workflow.plugins.ory_hydra.v1.AuthProviderDescribeOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_client_create",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_client_get",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_client_list",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_client_update",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_client_delete",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_set_create",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_set_get",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_set_update",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_set_delete",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_get",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_update",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_json_web_key_delete",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_trusted_jwt_issuer_list",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_trusted_jwt_issuer_get",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_trusted_jwt_issuer_create",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_trusted_jwt_issuer_delete",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    },
+    {
+      "kind": "step",
+      "type": "step.ory_hydra_oauth2_consent_session_list",
+      "mode": "strict",
+      "config": "workflow.plugins.ory_hydra.v1.OryHydraStepConfig",
+      "input": "workflow.plugins.ory_hydra.v1.OryHydraStepInput",
+      "output": "workflow.plugins.ory_hydra.v1.OryHydraStepOutput"
+    }
+  ]
+}

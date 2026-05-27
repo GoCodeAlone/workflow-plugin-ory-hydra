@@ -1,0 +1,102 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install wfctl v0.63.2
+        run: |
+          mkdir -p "${RUNNER_TEMP}/wfctl-bin"
+          curl -sSfL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -o "${RUNNER_TEMP}/wfctl-bin/wfctl" \
+            "https://github.com/GoCodeAlone/workflow/releases/download/v0.63.2/wfctl-linux-amd64"
+          chmod +x "${RUNNER_TEMP}/wfctl-bin/wfctl"
+      - name: Validate plugin contract for publish (pre-build)
+        run: "${{ runner.temp }}/wfctl-bin/wfctl plugin validate-contract --for-publish --tag ${{ github.ref_name }} ."
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          version: "~> v2"
+          args: release --clean --parallelism=1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: goreleaser-dist
+          path: dist/
+
+  publish-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [release]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install wfctl v0.63.2
+        run: |
+          mkdir -p "${RUNNER_TEMP}/wfctl-bin"
+          curl -sSfL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -o "${RUNNER_TEMP}/wfctl-bin/wfctl" \
+            "https://github.com/GoCodeAlone/workflow/releases/download/v0.63.2/wfctl-linux-amd64"
+          chmod +x "${RUNNER_TEMP}/wfctl-bin/wfctl"
+      - uses: actions/download-artifact@v4
+        with:
+          name: goreleaser-dist
+          path: dist/
+      - name: Verify capabilities (runtime truth-check)
+        run: |
+          RUNNER_ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+          BIN=$(jq -r --arg arch "$RUNNER_ARCH" \
+            '[.[] | select(.type=="Binary" and .goos=="linux" and .goarch==$arch and (.name|startswith("workflow-plugin-ory-hydra")))] | .[0].path // ""' \
+            dist/artifacts.json)
+          if [ -z "$BIN" ] || [ "$BIN" = "null" ]; then
+            echo "::warning::No matching linux/$RUNNER_ARCH binary in dist/artifacts.json; skipping verify-capabilities"
+            jq '.[] | {name, type, goos, goarch, path}' dist/artifacts.json
+            exit 0
+          fi
+          chmod +x "$BIN"
+          "${{ runner.temp }}/wfctl-bin/wfctl" plugin verify-capabilities --binary "$BIN" .
+      - name: Publish GitHub release
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const tag = process.env.GITHUB_REF_NAME;
+            const { owner, repo } = context.repo;
+            let release;
+            try {
+              ({ data: release } = await github.rest.repos.getReleaseByTag({ owner, repo, tag }));
+            } catch (error) {
+              if (error.status === 404) {
+                const releases = await github.paginate(github.rest.repos.listReleases, {
+                  owner,
+                  repo,
+                  per_page: 100,
+                });
+                release = releases.find((candidate) => candidate.tag_name === tag);
+                if (!release) {
+                  core.setFailed(`No GitHub release found for ${tag}; ensure GoReleaser created the draft before publishing.`);
+                  return;
+                }
+              } else {
+                throw error;
+              }
+            }
+            if (release.draft) {
+              await github.rest.repos.updateRelease({
+                owner,
+                repo,
+                release_id: release.id,
+                draft: false,
+              });
+            }
