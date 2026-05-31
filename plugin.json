@@ -8,6 +8,20 @@
   "tier": "community",
   "private": false,
   "minEngineVersion": "0.64.0",
+  "required_secrets": [
+    {
+      "name": "ORY_HYDRA_ADMIN_URL",
+      "sensitive": false,
+      "description": "Ory Hydra Admin API base URL. Referenced as ${ORY_HYDRA_ADMIN_URL}. Keep this server-side only.",
+      "prompt": "Ory Hydra Admin API URL"
+    },
+    {
+      "name": "ORY_HYDRA_API_KEY",
+      "sensitive": true,
+      "description": "Bearer token for protected Ory Hydra Admin API deployments. Referenced as ${ORY_HYDRA_API_KEY}. Leave blank only for private self-hosted admin endpoints that do not use bearer auth.",
+      "prompt": "Ory Hydra Admin API bearer token"
+    }
+  ],
   "keywords": ["ory", "hydra", "oauth2", "oidc", "jwk", "authentication"],
   "homepage": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra",
   "repository": "https://github.com/GoCodeAlone/workflow-plugin-ory-hydra",
