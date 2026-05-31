@@ -64,8 +64,18 @@ jobs:
             jq '.[] | {name, type, goos, goarch, path}' dist/artifacts.json
             exit 0
           fi
+          ARCHIVE=$(jq -r --arg arch "$RUNNER_ARCH" \
+            '[.[] | select(.type=="Archive" and .goos=="linux" and .goarch==$arch and (.name|startswith("workflow-plugin-ory-hydra")))] | .[0].path // ""' \
+            dist/artifacts.json)
+          if [ -z "$ARCHIVE" ] || [ "$ARCHIVE" = "null" ]; then
+            echo "::warning::No matching linux/$RUNNER_ARCH archive in dist/artifacts.json; skipping verify-capabilities"
+            jq '.[] | {name, type, goos, goarch, path}' dist/artifacts.json
+            exit 0
+          fi
+          VERIFY_DIR=$(mktemp -d)
+          tar -xzf "$ARCHIVE" -C "$VERIFY_DIR" plugin.json plugin.contracts.json LICENSE
           chmod +x "$BIN"
-          "${{ runner.temp }}/wfctl-bin/wfctl" plugin verify-capabilities --binary "$BIN" .
+          "${{ runner.temp }}/wfctl-bin/wfctl" plugin verify-capabilities --binary "$BIN" "$VERIFY_DIR"
       - name: Publish GitHub release
         uses: actions/github-script@v7
         with:
